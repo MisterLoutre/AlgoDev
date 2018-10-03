@@ -5,9 +5,8 @@ import java.awt.event.*;  // Uses AWT's Event Handlers
 import javax.swing.*;     // Uses Swing's Container/Components
  import java.util.*;
 /**
- * The Sudoku game.
  * To solve the number puzzle, each row, each column, and each of the
- * nine 3×3 sub-grids shall contain all of the digits from 1 to 9
+ * nine 3Ã—3 sub-grids shall contain all of the digits from 1 to 9
  */
 public class Sudoku extends JFrame {
  
@@ -136,12 +135,12 @@ public class Sudoku extends JFrame {
          }*/
          
        
-        if(gridCompleted(tfCells)) { //essaye de verifier si toutes les cases ss valeur ont été remplis 
+        if(gridCompleted(tfCells)) { //essaye de verifier si toutes les cases ss valeur ont Ã©tÃ© remplis 
         	 boolean success = true ;
          for( int row = 0 ; row< GRID_SIZE; row++) {
         	 for ( int col = 0; col < GRID_SIZE ; col++) {
         		 int number = Integer.parseInt( tfCells[row][col].getText());
-        		 if(number == (grilles.ListPuzzles.get(numG))[row][col] /*&& masks[row][col]== false*/ ) { // si le nombre entré dans ler tfCells egal le nombre du puzzle case validée 
+        		 if(number == (grilles.ListPuzzles.get(numG))[row][col] /*&& masks[row][col]== false*/ ) { // si le nombre entrÃ© dans ler tfCells egal le nombre du puzzle case validÃ©e 
         			 tfCells[row][col].setBackground(Color.GREEN);
         		 }else  { tfCells[row][col].setBackground(Color.RED);
         		 			success =false ;}
