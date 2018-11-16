@@ -39,15 +39,68 @@ class Pendu extends JFrame implements ActionListener {
     JPanel panGrille;
     JPanel panDeSaisie;
     
+    JPanel pan1 = new JPanel();  
+    JPanel pan2 = new JPanel();  
+    JPanel pan3 = new JPanel();  
+    JPanel pan4 = new JPanel();  
+    JPanel pan5 = new JPanel();  
+    JPanel pan6 = new JPanel();  
+    JPanel pan7 = new JPanel();  
+    JPanel pan8 = new JPanel();  
+    JPanel pan9 = new JPanel(); 
+    JPanel pan10 = new JPanel();  
+    
     ArrayList <String> mot = new ArrayList<String>();
     
     JTextField [] tfCells = new JTextField [GRID_SIZE];
     JTextField caseSaisie = new JTextField ();
+    JTextField listeML = new JTextField ();
   
    
     List <String> listeMUtil = new ArrayList <String> ();
     List <String> listeMDico = new ArrayList <String> ();
 	Boolean valideLettre = false; 
+	int erreur=0;
+	
+	 ImageIcon img= new ImageIcon("erreur0.png");
+	 ImageIcon img1= new ImageIcon("erreur1.png");
+	 ImageIcon img2= new ImageIcon("erreur2.png");
+	 ImageIcon img3= new ImageIcon("erreur3.png");
+	 ImageIcon img4= new ImageIcon("erreur4.png");
+	 ImageIcon img5= new ImageIcon("erreur0.png");
+	 ImageIcon img6= new ImageIcon("erreur0.png");
+	 ImageIcon img7= new ImageIcon("erreur0.png");
+	 ImageIcon img8= new ImageIcon("erreur0.png");
+	 ImageIcon img9= new ImageIcon("erreur0.png");
+	 ImageIcon img10= new ImageIcon("erreur0.png");
+	 JLabel panSchema = new JLabel (img);
+	 JLabel panSchema1 = new JLabel (img1);
+	 JLabel panSchema2 = new JLabel (img2);
+	 JLabel panSchema3 = new JLabel (img3);
+	 JLabel panSchema4 = new JLabel (img4);
+	 JLabel panSchema5 = new JLabel (img);
+	 JLabel panSchema6 = new JLabel (img);
+	 JLabel panSchema7 = new JLabel (img);
+	 JLabel panSchema8 = new JLabel (img);
+	 JLabel panSchema9 = new JLabel (img);
+	 JLabel panSchema10 = new JLabel (img);
+	// Image myNewImage = img.getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT); 
+	 
+	/* 
+	 public void setImage(ImageIcon image) {
+			this.img = image;
+			repaint();
+			}
+	 
+	 public void redraw() {
+		 //   System.out.println("redraw arrow");
+		    this.setPreferredSize(new Dimension(CANVAS_WIDTH+100,CANVAS_HEIGHT+100)); //default cube
+		    this.revalidate();
+		    this.repaint();
+		    this.paint(getGraphics());
+		}
+	 
+*/
 	
 	Pendu () {
 	listeMotsDico();
@@ -61,10 +114,18 @@ class Pendu extends JFrame implements ActionListener {
         
         
         panDeSaisie.add(caseSaisie);
+        panDeSaisie.add(listeML);
         contentPanel.add(panGrille);
         contentPanel.add(panDeSaisie);
+        contentPanel.add(panSchema);
+  
+        
+      //  contentPanel.add(listeML);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().add(contentPanel, BorderLayout.CENTER);
+        getContentPane().add(panSchema, BorderLayout.SOUTH);
+        //getContentPane().add(listeML, BorderLayout.EAST);
+        getContentPane().setBackground(Color.WHITE);
 
         
         setTitle("Pendu");
@@ -74,12 +135,19 @@ class Pendu extends JFrame implements ActionListener {
         
 	}
 	public void affichage() {
+		
 		   panGrille = new JPanel();
 		   panDeSaisie= new JPanel();
 	       panGrille.setPreferredSize(new Dimension(800, 100));
 	       panGrille.setLayout( new GridLayout(1, GRID_SIZE,2,2));
 	       panDeSaisie.setLayout(new GridLayout(1,1));
 	       panDeSaisie.setPreferredSize(new Dimension(200, 40));
+	       
+	      panSchema = new JLabel (img);
+	      contentPanel.add(panSchema);
+	      getContentPane().add(panSchema, BorderLayout.SOUTH);
+	    //  contentPanel.repaint();
+	      
 	      
 	        caseSaisie = new JTextField();
 	        caseSaisie.setText(null);
@@ -87,6 +155,15 @@ class Pendu extends JFrame implements ActionListener {
 	        caseSaisie.setSize(200,40);
 	        caseSaisie.setHorizontalAlignment(JTextField.CENTER);
 	        caseSaisie.setFont(FONT_NUMBERS);
+	        
+	      /*  
+	        listeML = new JTextField();
+	        listeML.setText("  " + (tentativesMax-erreur));
+	        listeML.setEditable(true); //utilisateur peut rentrer qqc dedans
+	        listeML.setSize(50,50);
+	        listeML.setHorizontalAlignment(JTextField.CENTER);
+	        listeML.setFont(FONT_NUMBERS);
+	        */
 	        
 	        caseSaisie.addKeyListener(	new KeyAdapter() {
 			@Override
@@ -114,12 +191,13 @@ class Pendu extends JFrame implements ActionListener {
 	                tfCells[col].setForeground(CLOSED_CELL_TEXT);
 
 	                tfCells[col].setHorizontalAlignment(JTextField.CENTER);
-	                tfCells[col].setFont(FONT_NUMBERS);
+	            	//	System.out.println("");                tfCells[col].setFont(FONT_NUMBERS);
 	        
 	                
 	            }
 	}
 	
+
 	
 	public static int tentativesMax=10; //Le nombre d'erreur maximale toélérées
 		
@@ -130,7 +208,7 @@ class Pendu extends JFrame implements ActionListener {
 	//	int nbAleatoire=rand.nextInt(tabMots.length); //Cette variable contient un nombre compris entre 0 et la valeur de la taille du tableau des mots a chercher.
 	
 	String motInitial; //On insère dans la variable motAdeviner le mots qui a été tiré au hasard
-		int longueurMotAChercher;//motInitial.length(); //On stock dans cette variable la longueur du mot a Deviner.		
+	int longueurMotAChercher;//motInitial.length(); //On stock dans cette variable la longueur du mot a Deviner.		
 	char tabMotAChercher[];//= new char [longueurMotAChercher]; //On créer un tableau de caractère de même taille que la longueur du mot a chercher
 		
 		int score = 0;
@@ -200,9 +278,10 @@ class Pendu extends JFrame implements ActionListener {
 						
 					tabMotAChercher[i] = motInitial.charAt(i);
 			
-					}	//System.out.println(tabMotAChercher);
+					}	System.out.println(tabMotAChercher);
 				
 		}
+		
 
 		
 		public void afficheMot() {
@@ -236,13 +315,13 @@ public void SaisirLettre () {
 	
 	int i;
 	int nbLettresBonnes=0;
-	int erreur=0; 
+	//int erreur=0; 
 	//int k=0;//Permettra de décaler les cases du tableau de lettres fausse de 1 a chaque erreur.
 	
 	char lettreSaisie; 
 	char tabErreurs[] = new char [tentativesMax];//Ce tableau contiendra toutes les lettre fausses saisie par l'utilisateur, sa taille est égal au nombre d'erreur.
 	
-	boolean motTrouve=false; //Nous permettra de savoir si le mot est trouve ou pas.
+	boolean motTrouve=false; //Nou}	s permettra de savoir si le mot est trouve ou pas.
 	boolean bonneLettre=false; //Nous permettra de savoir si l'utilisateur a entrée une lettre qui se trouve dans le mot ou non?
 	
 	boolean bonneLettreDejaDite=false; //Nous permettra de savoir si l'utilisateur a saisi une lettre identique, qui est déjà afficher a l'écran dans le mot.
@@ -251,15 +330,12 @@ public void SaisirLettre () {
 	
 	
 	
-		do{
+	while ((motTrouve==false) && (erreur!=tentativesMax)){
 			
 			nbLettresBonnes=0; 
 			bonneLettre=false; 
 			
-			
-			
-		
-			
+	
 				do{ 
 		/* Cas où la lettre à déjà été dite
 		 * 	qu'elle soit fausse
@@ -281,12 +357,12 @@ public void SaisirLettre () {
 					
 						}
 					}
-						System.out.println("Quelle lettre desirez vous entrer? ");
-						
+						System.out.println("Entrez une lettre ");
+						/*
 						while(!valideLettre || caseSaisie.getText().equals(null)) {
 							Thread.yield();
 						}
-						
+						*/
 			
 			       // String r1 = sc.nextLine();	
 						String r1 = caseSaisie.getText();
@@ -309,7 +385,8 @@ public void SaisirLettre () {
 							mauvaiseLettreDejaDite=true;
 							
 							i = i+1;
-									
+							erreur++;
+								
 						}
 					}
 					
@@ -357,7 +434,6 @@ public void SaisirLettre () {
 			while((bonneLettreDejaDite!=false) || (mauvaiseLettreDejaDite!=false));
 			
 				
-		//	System.out.println("");
 			
 			
 			//On utilise cette boucle pour vérifier si la lettre saisie correspond bien avec une des lettre dans le mot.
@@ -385,8 +461,94 @@ public void SaisirLettre () {
 			}
 			
 			
-			if (erreur!=tentativesMax){
-		
+			if (erreur!=tentativesMax) { //&& (bonneLettre!=true)){
+				//erreur=erreur+1;
+				//System.out.println("Aucune lettre ne correspond a votre saisie il vous reste : "+(tentativesMax-erreur)+" Chances! ");
+				
+				
+				switch (erreur)
+
+				{
+				case 0 :  img= new ImageIcon("erreur0.png");
+				  panSchema = new JLabel (img);
+				  //Image myNewImage = img.getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+				 // panSchema.setI
+				//  setImage(img);
+				  
+				  contentPanel.add(panSchema);
+				  
+					
+					break;
+			
+
+				  case 1: 
+					
+				 // img= new ImageIcon("erreur1.png");
+				//  panSchema = new JLabel (img);
+				  System.out.println("CASE 2");
+				  //Image myNewImage = img.getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+				// setImage(img);
+				 contentPanel.add(panSchema1);
+				 getContentPane().add(panSchema1, BorderLayout.SOUTH);
+				 contentPanel.setVisible(true);
+				//  affichage();
+				    break;
+
+				  case 2: 
+					   img= new ImageIcon("erreur2.png");
+					  panSchema = new JLabel (img);
+					  System.out.println("CASE 2");
+					//
+					//  setImage(img);
+					//  affichage();
+					  contentPanel.add(panSchema2);
+					  getContentPane().add(panSchema2, BorderLayout.SOUTH);
+					  contentPanel.setVisible(true);
+			
+				    break;
+				  case 3: 
+					   img= new ImageIcon("erreur3.png");
+					  panSchema = new JLabel (img);
+					  contentPanel.add(panSchema3);
+			
+				    break;
+				  case 4: 
+					   img= new ImageIcon("erreur4.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+				  case 5: 
+					   img= new ImageIcon("erreur5.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+				  case 6: 
+					   img= new ImageIcon("erreur6.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+				  case 7: 
+					   img= new ImageIcon("erreur7.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+				  case 8: 
+					   img= new ImageIcon("erreur8.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+				  case 9: 
+					   img= new ImageIcon("erreur9.png");
+					  panSchema = new JLabel (img);
+			
+				    break;
+
+				  default:
+
+					  JOptionPane.showMessageDialog(null, "ERREUR !");
+
+				}
+
 						
 				for (i=1;i<tabMotAChercher.length-1;i++){
 					
@@ -407,45 +569,41 @@ public void SaisirLettre () {
 						System.out.println("");
 						System.out.println("Le mot etait: "+motInitial);
 						score = score * longueurMotAChercher;
-						System.out.println("Votre score est de " + score);
+						
+						JOptionPane.showMessageDialog(null, "Felicitations ! Votre score est de " + score);
 						
 						
 					}
 				
 				}
-			
+
+			    
 			
 				
 				if (motTrouve!=true){
 				
 				
 					System.out.println("Vous avez trouve en tout "+nbLettresBonnes+" lettres."); //Si le mot n'est pas trouvé alors on affiche le nombre de lettre trouvé en tout
-					System.out.println("");
-					System.out.print("Maintenant le mot devient: ");
 					
-					for (i=0;i<tabMotAChercher.length;i++){
+					//On reaffiche le nouveau mot
+					
+					for (i=0;i<tabMotAChercher.length;i++) System.out.print(tabMotAChercher[i]);
 						
-					System.out.print(tabMotAChercher[i]); //On affiche le mot après que l'utilisateur est trouver une des lettres
-							
-					
-					}
-					
-					System.out.println("");
 				
 				}
-				System.out.println("-----------------------------------");
+
 			}
 		}
 		
-		while ((motTrouve==false) && (erreur!=tentativesMax))	; // On execute les blocs d'instruction du dessus tant que le joueur n'a pas perdu ou tant que le mot a trouver n'est pas trouvé.
-		
-		if (erreur==tentativesMax){ //Quand on atteint le nombre d'erreur max le joueur perds... 
-			System.out.println("-----------------------------------");
-			System.out.println("Perdu!");
-			System.out.println("");
-			System.out.println("Le mot etait: "+motInitial);
+		//PERDU -->	
+		if (erreur==tentativesMax){ 
+			img= new ImageIcon("erreur10.png");
+			  panSchema10 = new JLabel (img);
+			  //affichage();
+			  JOptionPane.showMessageDialog(null, "Perdu ! Le mot était : " +motInitial + ". Votre score est de " + score);
 		
 		}
+		
 	}
 
 @Override
